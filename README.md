@@ -2,4 +2,4 @@
 Central Authentication Service
 
 # Infrastructure
-![assets/infra.drawio.svg](assets/infra.drawio.png)
+![assets/infra.drawio.png](assets/infra.drawio.png)
