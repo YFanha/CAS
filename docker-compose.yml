@@ -1,0 +1,67 @@
+services:
+  ldap:
+    image: osixia/openldap:1.5.0
+    container_name: openldap
+    environment:
+      - LDAP_ORGANISATION=fanha.local
+      - LDAP_DOMAIN=fanha.local
+      - LDAP_ADMIN_PASSWORD=admin
+      - LDAP_ROOT=dc=fanha,dc=local
+    ports:
+      - "389:389"
+      - "636:636"
+    volumes:
+      - ./ldap-data:/var/lib/ldap
+      - ./ldap-config:/etc/ldap/slapd.d
+    networks:
+      - cas
+
+  phpldapadmin:
+    image: osixia/phpldapadmin:0.9.0
+    container_name: phpldapadmin
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=ldap
+    ports:
+      - "6443:443"
+    depends_on:
+      - ldap
+    networks:
+      - cas
+
+  LAM:
+    image: ghcr.io/ldapaccountmanager/lam:9.0
+    container_name: lam
+    environment:
+      - LAM_LDAP_HOSTS=ldap
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ldap
+    networks:
+      - cas
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.1.1
+    environment:
+      KC_HOSTNAME_PORT: 7080
+      KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command: ["start-dev", "--http-port", "7080", "--https-port", "7443"]
+    ports:
+      - "7080:7080"
+    networks:
+      - cas
+
+  moodle:
+    image: bitnami/moodle:4.5-debian-12
+    environment:
+      - MOODLE_DATABASE_USER=admin
+      - MOODLE_DATABASE_PASSWORD=password
+      - MOODLE_DATABASE_NAME=cas_moodle
+    networks:
+      - cas
+
+  networks:
+    cas:
+      driver: bridge
