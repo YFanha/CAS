@@ -60,7 +60,8 @@ services:
       - cas
 
   moodle:
-    image: bitnami/moodle:4.5-debian-12
+    # image: bitnami/moodle:4.5-debian-12
+    image: bitnami/moodle:latest
     environment:
       - MOODLE_DATABASE_HOST=moodle_db
       - MOODLE_DATABASE_USER=moodle
@@ -78,6 +79,34 @@ services:
       - ./volumes/moodle/moodledata:/bitnami/moodledata
     depends_on:
       - moodle_db
+
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - "8083:80"
+    environment:
+      WORDPRESS_DB_HOST: wordpress_db:3306
+      WORDPRESS_DB_NAME: wordpress_db
+      WORDPRESS_DB_USER: admin
+      WORDPRESS_DB_PASSWORD: password
+    volumes:
+      - ./volumes/wordpress_data:/var/www/html
+    depends_on:
+      - wordpress_db
+    networks:
+      - cas
+
+  wordpress_db:
+    image: bitnami/mariadb:10.11.11 
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_DATABASE: wordpress_db
+      MARIADB_USER: admin
+      MARIADB_PASSWORD: password
+    volumes:
+      - ./volumes/wordpress_db:/bitnami/mariadb
+    networks:
+      - cas
 
 networks:
   cas:
