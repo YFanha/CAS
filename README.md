@@ -28,7 +28,7 @@ L'infrastructure étant hébergée chez moi, j'ai redirigé les ports 80 et 443 
 ![assets/Pasted image 20250314142702.png](assets/Pasted%20image%2020250314142702.png)
 
 ## SSL
-![[Pasted image 20250314142856.png]]
+![SSL](Pasted%20image%2020250314142856.png)
 
 
 # Keycloak
