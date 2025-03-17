@@ -73,28 +73,29 @@ services:
   moodle_db:
     image: bitnami/mariadb:10.11.11
     environment:
-      - MARIADB_ROOT_PASSWORD=password
-      - MARIADB_USER=moodle
-      - MARIADB_PASSWORD=password
-      - MARIADB_DATABASE=cas_moodle
-      - MARIADB_CHARACTER_SET=utf8mb4
-      - MARIADB_COLLATE=utf8mb4_unicode_ci
+      MARIADB_ROOT_PASSWORD: passworrd
+      MARIADB_USER: moodle
+      MARIADB_PASSWORD: password
+      MARIADB_DATABASE: cas_moodle
+      MARIADB_CHARACTER_SET: utf8mb4
+      MARIADB_COLLATE: utf8mb4_unicode_ci
     volumes:
       - ./volumes/moodle_db:/bitnami/mariadb
     networks:
       - cas
 
   moodle:
-    # image: bitnami/moodle:4.5-debian-12
+    #image: bitnami/moodle:4.5-debian-12
     image: bitnami/moodle:latest
     environment:
-      - MOODLE_DATABASE_HOST=moodle_db
-      - MOODLE_DATABASE_USER=moodle
-      - MOODLE_DATABASE_PASSWORD=password
-      - MOODLE_DATABASE_NAME=cas_moodle
-      - MOODLE_USERNAME=yann
-      - MOODLE_PASSWORD=password
-      - MOODLE_SITE_NAME=CASFANHA
+      MOODLE_DATABASE_HOST: moodle_db
+      MOODLE_DATABASE_USER: moodle
+      MOODLE_DATABASE_PASSWORD: password
+      MOODLE_DATABASE_NAME: cas_moodle
+      MOODLE_USERNAME: yann
+      MOODLE_PASSWORD: password
+      MOODLE_SITE_NAME: CASFANHA
+     # - MOODLE_DATABASE_PORT_NUMBER=3306
     ports:
       - 8082:8080
     networks:
