@@ -103,3 +103,5 @@ L'infrastructure étant hébergée chez moi, j'ai redirigé les ports 80 et 443 
 # 2FA
 Keycloak possède déjà la fonction "2FA". Il suffit donc d'aller dans les utilisateurs souhaités et séléctionner `Configure OTP` dans `Required user actions`
 ![[Pasted image 20250317143417.png]]![[Pasted image 20250317143507.png]]
+
+Preuve faite via POC.
